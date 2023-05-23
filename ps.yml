@@ -12,7 +12,6 @@ jobs:
           errorActionPreference: SilentlyContinue
           script: |
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
-            exit 1
             if ($exitCode -ne 0)
             {
                Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
