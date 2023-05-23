@@ -8,6 +8,14 @@ jobs:
     steps:
       - task: PowerShell@2
         inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "##vso[task.LogIssue type=error;]This is the error"
+            exit 1
+          errorActionPreference: SilentlyContinue
+
+      - task: PowerShell@2
+        inputs:
           targetType: filePath
           filePath: $(System.DefaultWorkingDirectory)\test2.ps1
           arguments: |
