@@ -10,4 +10,4 @@ jobs:
   - task: PowerShell@2
     inputs:
       targetType: 'filePath'
-      filePath: $(System.DefaultWorkingDirectory)\test.ps1
+      filePath: '$(System.DefaultWorkingDirectory)\test.ps1'
