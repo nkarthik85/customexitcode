@@ -1,7 +1,7 @@
 trigger:
   - master
 jobs:
-  - job: PSTest
+  - job: PShellTest
     pool:
       vmImage: windows-latest
     displayName: Run PSTest
