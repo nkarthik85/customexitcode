@@ -1,3 +1,4 @@
+---
 trigger:
   - master
 jobs:
@@ -8,17 +9,19 @@ jobs:
     steps:
       - task: PowerShell@2
         inputs:
-          targetType: 'inline'
+          targetType: inline
           errorActionPreference: SilentlyContinue
-          script: |
+          script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
+
             if ($exitCode -ne 0)
+
             {
                Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
                echo "indexing"
             }
-            exit $exitCode      
 
+            exit $exitCode      
       - task: PowerShell@2
         inputs:
           targetType: filePath
@@ -26,14 +29,13 @@ jobs:
           arguments: |
             -input1 "Hello" -input2 "World"
         displayName: Print Hello World
-        
-    - job: indexing
-      displayName: indexing permissions
-      pool: server                   
-      steps:
-        - task: AzureFunction@1
-          inputs:
-             function: 'https://hrms.techmango.net'
-             method: 'POST'
-             body: 'Techmango Technology Services Pvt Ltd'
-             waitForCompletion: 'false'      
+  - job: indexing
+    displayName: indexing permissions
+    pool: server
+    steps:
+      - task: AzureFunction@1
+        inputs:
+          function: https://hrms.techmango.net
+          method: POST
+          body: Techmango Technology Services Pvt Ltd
+          waitForCompletion: "false"
