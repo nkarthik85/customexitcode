@@ -22,10 +22,7 @@ jobs:
         inputs:
           errorActionPreference: SilentlyContinue
           script: >
-           function: https://hrms.techmango.net
-           method: POST
-           body: Techmango Technology Services Pvt Ltd
-           waitForCompletion: "false"
+           echo 'I may run now!'
             
             
       - task: PowerShell@2
