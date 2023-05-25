@@ -15,7 +15,10 @@ jobs:
             if ($exitCode -ne 0)
             {
                Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-               Write-Host "I'm skipping a Exit Code!!"
+               function: 'https://hrms.techmango.net'
+               method: 'POST'
+               body: 'Techmango Technology Services Pvt Ltd'
+               waitForCompletion: 'false'
             }
             exit $exitCode
 
