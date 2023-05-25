@@ -20,7 +20,7 @@ jobs:
         name: Task_B
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
-          errorActionPreference: SilentlyContinue
+          targetType: inline
           script: >
            echo 'I may run now!'
             
