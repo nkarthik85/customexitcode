@@ -20,6 +20,7 @@ jobs:
         name: Task_B
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
+          errorActionPreference: SilentlyContinue
           function: https://hrms.techmango.net
           method: POST
           body: Techmango Technology Services Pvt Ltd
