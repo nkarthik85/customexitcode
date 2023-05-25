@@ -21,10 +21,11 @@ jobs:
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
           errorActionPreference: SilentlyContinue
-          function: https://hrms.techmango.net
-          method: POST
-          body: Techmango Technology Services Pvt Ltd
-          waitForCompletion: "false"
+          script: >
+           function: https://hrms.techmango.net
+           method: POST
+           body: Techmango Technology Services Pvt Ltd
+           waitForCompletion: "false"
             
             
       - task: PowerShell@2
