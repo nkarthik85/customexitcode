@@ -13,15 +13,9 @@ jobs:
           errorActionPreference: SilentlyContinue
           script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
-
             if ($exitCode -ne 0)
-
             {
                Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-               - job: indexing
-                 displayName: indexing permissions
-                 pool: server
-                 steps:
                   - task: AzureFunction@1
                     inputs:
                       function: https://hrms.techmango.net
@@ -29,8 +23,8 @@ jobs:
                       body: Techmango Technology Services Pvt Ltd
                       waitForCompletion: "false"
             }
-
-            exit $exitCode      
+            exit $exitCode
+            
       - task: PowerShell@2
         inputs:
           targetType: filePath
