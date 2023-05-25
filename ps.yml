@@ -8,22 +8,22 @@ jobs:
     displayName: Run PSTest
     steps:
       - task: PowerShell@2
+        name: Task_A
         inputs:
           targetType: inline
           errorActionPreference: SilentlyContinue
           script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
-            if ($exitCode -ne 0)
-            {
-               Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-                  - task: AzureFunction@1
-                    inputs:
-                      function: https://hrms.techmango.net
-                      method: POST
-                      body: Techmango Technology Services Pvt Ltd
-                      waitForCompletion: "false"
-            }
-            exit $exitCode
+            Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
+        
+      - task: AzureFunction@1
+        condition: eq(variables['Task_A.exitCode'], '1') 
+        inputs:
+          function: https://hrms.techmango.net
+          method: POST
+          body: Techmango Technology Services Pvt Ltd
+          waitForCompletion: "false"
+            
             
       - task: PowerShell@2
         inputs:
