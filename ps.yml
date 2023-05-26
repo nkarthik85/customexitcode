@@ -23,9 +23,9 @@ jobs:
           errorActionPreference: SilentlyContinue
           targetType: inline
           script: >
-            $orgUrl = "https://hrms.techmango.net"
-            Write-Host "URL: $orgUrl"
-              $pipeline = Invoke-RestMethod -Uri $url -Headers @{
+            $url = "https://hrms.techmango.net"
+              Write-Host "URL: $url"
+              $pipeline = Invoke-RestMethod -Uri $url -Method Post -Headers @{
                   Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
               }
               Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
