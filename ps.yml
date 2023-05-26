@@ -46,9 +46,8 @@ jobs:
             $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Method Post -Body $body -ContentType application/json
             echo $response
           azurePowerShellVersion: 'LatestVersion'
-        
-         env:
-           SYSTEM_ACCESSTOKEN: $(System.AccessToken)  
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)  
                     
       - task: PowerShell@2
         inputs:
