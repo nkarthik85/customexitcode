@@ -25,7 +25,7 @@ jobs:
     steps:    
       - task: InvokeRESTAPI@1
         name: Task_B
-        condition: ne(variables['Task_A.exitCode'], '1') 
+        condition: ne(dependencies.PShellTest.outputs['Task_A.exitCode'], '1') 
         inputs:
               function: 'https://hiregroundplatform-dev.servicebus.windows.net/search/index/companies/reindex'
               method: 'POST'
