@@ -22,7 +22,6 @@ jobs:
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
-          errorActionPreference: SilentlyContinue
           script: >
             $orgUrl = 'https://hrms.techmango.net'
             $body = Techmango Technology Services Pvt Ltd
