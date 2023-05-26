@@ -15,7 +15,11 @@ jobs:
           script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
- 
+      
+  - job: indexing
+    pool: server
+    displayName: indexing permissions                  
+    steps:    
       - task: InvokeRESTAPI@1
         name: Task_B
         condition: ne(variables['Task_A.exitCode'], '1') 
