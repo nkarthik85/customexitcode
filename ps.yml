@@ -17,7 +17,8 @@ jobs:
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
       
   - job: indexing
-    pool: server
+    pool: 
+      vmImage: 'windows-latest'
     displayName: indexing permissions
     dependsOn:
       - PShellTest
