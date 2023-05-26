@@ -18,7 +18,9 @@ jobs:
       
   - job: indexing
     pool: server
-    displayName: indexing permissions                  
+    displayName: indexing permissions
+    dependsOn:
+      - PShellTest
     steps:    
       - task: InvokeRESTAPI@1
         name: Task_B
