@@ -16,7 +16,7 @@ jobs:
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
    
-      - task: AzurePowerShell@5
+      - task: AzurePowerShell@2
         name: Task_B
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
@@ -27,6 +27,7 @@ jobs:
             $body = Techmango Technology Services Pvt Ltd
             $response = Invoke-RestMethod -Uri $orgUrl -Headers $header -Method Post -Body $body -ContentType application/json
             echo $response
+          azurePowerShellVersion: 'LatestVersion'  
                     
       - task: PowerShell@2
         inputs:
