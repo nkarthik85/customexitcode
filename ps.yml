@@ -43,9 +43,12 @@ jobs:
             $url = "https://hrms.techmango.net"
             $token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$(system.accesstoken)"))
             $body = "Techmango Technology Services Pvt Ltd"
-            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Basic $token"} -Method Post -Body $body -ContentType application/json
+            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Method Post -Body $body -ContentType application/json
             echo $response
-          azurePowerShellVersion: 'LatestVersion'  
+          azurePowerShellVersion: 'LatestVersion'
+        
+         env:
+           SYSTEM_ACCESSTOKEN: $(System.AccessToken)  
                     
       - task: PowerShell@2
         inputs:
