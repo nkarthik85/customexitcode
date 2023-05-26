@@ -8,22 +8,23 @@ jobs:
     displayName: Run PSTest
     steps:
       - task: PowerShell@2
+        name: Task_A
         inputs:
           targetType: inline
           errorActionPreference: SilentlyContinue
           script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
-            if ($exitCode -ne 0)
-            {
-               $orgUrl = "https://hrms.techmango.net" 
-               Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-               $response = Invoke-RestMethod -Uri https://hrms.techmango.net -Method Post -ContentType "application/json" -Headers $header
-               Write-Host "Update Project Status:" $response.status
-            }
-            exit $exitCode
-          ScriptType: InlineScript
-            
-            
+            Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
+ 
+      - task: PowerShell@2
+        name: Task_B
+        condition: ne(variables['Task_A.exitCode'], '1') 
+        inputs:
+              function: 'https://hiregroundplatform-dev.servicebus.windows.net/search/index/companies/reindex'
+              method: 'POST'
+              body: 'dev--companies-004'
+              waitForCompletion: 'false'
+                    
       - task: PowerShell@2
         inputs:
           targetType: filePath
