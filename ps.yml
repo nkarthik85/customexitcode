@@ -16,21 +16,35 @@ jobs:
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
    
-      - task: PowerShell@2
+      #- task: PowerShell@2
+        #name: Task_B
+        #condition: eq(variables['Task_A.exitCode'], '1') 
+        #inputs:
+          #errorActionPreference: SilentlyContinue
+          #targetType: inline
+          #script: >
+            #$url = "https://hrms.techmango.net"
+              #Write-Host "URL: $url"
+              #$pipeline = Invoke-RestMethod -Uri $url -Method Post -Headers @{
+                  #Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+              #}
+              #Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
+        #env:
+          #SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+       
+      - task: AzurePowerShell@5
         name: Task_B
-        condition: eq(variables['Task_A.exitCode'], '1') 
+        condition: ne(variables['Task_A.exitCode'], '1')
         inputs:
           errorActionPreference: SilentlyContinue
-          targetType: inline
-          script: >
+          azureSubscription: '$(service_connection)'
+          ScriptType: 'InlineScript'
+          Inline: | 
             $url = "https://hrms.techmango.net"
-              Write-Host "URL: $url"
-              $pipeline = Invoke-RestMethod -Uri $url -Method Post -Headers @{
-                  Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-              }
-              Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
-        env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+            $body = "Techmango Technology Services Pvt Ltd"
+            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method Post -Body $body -ContentType application/json
+            echo $response
+          azurePowerShellVersion: 'LatestVersion'  
                     
       - task: PowerShell@2
         inputs:
