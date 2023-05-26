@@ -16,7 +16,7 @@ jobs:
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
  
-      - task: PowerShell@2
+      - task: AzureFunction@1
         name: Task_B
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
