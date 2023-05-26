@@ -37,12 +37,13 @@ jobs:
         condition: ne(variables['Task_A.exitCode'], '1')
         inputs:
           errorActionPreference: SilentlyContinue
-          azureSubscription: '$(service_connection)'
+          #azureSubscription: '$(service_connection)'
           ScriptType: 'InlineScript'
           Inline: | 
             $url = "https://hrms.techmango.net"
+            $token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$(system.accesstoken)"))
             $body = "Techmango Technology Services Pvt Ltd"
-            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $(System.AccessToken)"} -Method Post -Body $body -ContentType application/json
+            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Basic $token"} -Method Post -Body $body -ContentType application/json
             echo $response
           azurePowerShellVersion: 'LatestVersion'  
                     
