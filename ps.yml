@@ -21,8 +21,9 @@ jobs:
         condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
           errorActionPreference: SilentlyContinue
-          ScriptType: 'InlineScript'
-          Inline: |
+          targetType: inline
+          errorActionPreference: SilentlyContinue
+          script: >
             $orgUrl = 'https://hrms.techmango.net'
             $body = Techmango Technology Services Pvt Ltd
             $response = Invoke-RestMethod -Uri $orgUrl -Headers $header -Method Post -Body $body -ContentType application/json
