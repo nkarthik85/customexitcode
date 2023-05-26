@@ -15,22 +15,17 @@ jobs:
           script: >
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-      
-  - job: indexing
-    pool: 
-      vmImage: 'windows-latest'
-    displayName: indexing permissions
-    dependsOn:
-      - PShellTest
-    steps:    
-      - task: InvokeRESTAPI@1
+   
+      - task: PowerShell@2
         name: Task_B
-        condition: ne(dependencies.PShellTest.outputs['Task_A.exitCode'], '1') 
+        condition: ne(variables['Task_A.exitCode'], '1') 
         inputs:
-              function: 'https://hiregroundplatform-dev.servicebus.windows.net/search/index/companies/reindex'
-              method: 'POST'
-              body: 'dev--companies-004'
-              waitForCompletion: 'false'
+          targetType: inline
+          errorActionPreference: SilentlyContinue
+          script: >
+            $orgUrl = "https://hrms.techmango.net"
+            $response = Invoke-RestMethod -Uri $orgUrl -Method Post -ContentType "application/json"
+            echo $response
                     
       - task: PowerShell@2
         inputs:
