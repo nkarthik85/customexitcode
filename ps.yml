@@ -24,13 +24,11 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.outputs'], 'true') 
+        condition: eq(variables['Task_A.outputs'], 'true') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
           script: >
-            echo $(Task_A.outputs)
-            echo $(SomeTask.out)
             $url = "https://hrms.techmango.net"
               Write-Host "URL: $url"
               $pipeline = Invoke-RestMethod -Uri $url -Body @{
