@@ -25,11 +25,11 @@ jobs:
             -input1 "Hello" -input2 "World"
         displayName: Print Hello World
          script: >
-           Write-Host "##vso[task.setvariable variable=output;]$output"
+           Write-Host "##vso[task.setvariable variable=output;]$input1"
         
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.output'], 'World') 
+        condition: ne(variables['Task_A.$input1'], 'World') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
