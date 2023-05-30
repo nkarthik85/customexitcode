@@ -1,6 +1,6 @@
 #param ($input1, $input2)
-$isNew = $true
-$isOld = $false
+$isNew = $true1
+$isOld = $false2
 $outputs = @{
     AliasName = test
     IsNew = $isNew
