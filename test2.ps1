@@ -9,3 +9,4 @@ $outputs = @{
 Write-Output -InputObject $outputs
 Write-Host "$input1 $input2"
 Write-Host "$isNew"
+Write-Host "$isOld"
