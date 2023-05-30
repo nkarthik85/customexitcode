@@ -24,8 +24,8 @@ jobs:
           arguments: |
             -input1 "Hello" -input2 "World"
         displayName: Print Hello World
-        script: >
-          Write-Host "##vso[task.setvariable variable=output;]$output"
+         script: >
+           Write-Host "##vso[task.setvariable variable=output;]$output"
         
       - task: PowerShell@2
         name: Task_B
