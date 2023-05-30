@@ -17,13 +17,13 @@ jobs:
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             
       - task: PowerShell@2
+        displayName: Print Hello World 
         name: Task_A
         inputs:
           targetType: filePath
           filePath: $(System.DefaultWorkingDirectory)\test2.ps1
           arguments: |
             -input1 "Hello" -input2 "World"
-        displayName: Print Hello World
          script: >
            Write-Host "##vso[task.setvariable variable=output;]$input1"
         
