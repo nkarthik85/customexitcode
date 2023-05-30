@@ -10,7 +10,7 @@ jobs:
       - task: PowerShell@2
         name: Task_A
         inputs:
-          targetType: inline
+          targetType: filePath
           filePath: $(System.DefaultWorkingDirectory)\test.ps1
           errorActionPreference: SilentlyContinue
           script: >
