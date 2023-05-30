@@ -43,7 +43,7 @@ jobs:
           arguments: |
             -input1 "Hello" -input2 "World"
          script: >
-           Write-Host "##vso[task.setvariable variable=input1;]$input1"
+           Write-Host "##vso[task.setvariable variable=outputs;]$outputs"
 
       #- task: AzurePowerShell@5
         #name: Task_B
