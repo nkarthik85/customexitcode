@@ -2,9 +2,10 @@ param ($input1, $input2)
 $isNew = $true
 $outputs = @{
     AliasName = test
-    IndexName = result
-    IndexVersion = Value.Version
+    IndexName = psfile
+    IndexVersion = karti
     IsNew = $isNew
 }
 Write-Output -InputObject $outputs
 Write-Host "$input1 $input2"
+Write-Host "$isNew"
