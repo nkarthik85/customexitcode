@@ -24,14 +24,10 @@ jobs:
           targetType: inline
           script: >
             $url = "https://hrms.techmango.net"
-            $Body = @{
-               search = "search index=_internal | reverse | href | table index,host,source,sourcetype,_raw"
-               output_mode = "csv"
-               earliest_time = "-2d@d"
-               latest_time = "-1d@d"
-            }
               Write-Host "URL: $url"
-              $pipeline = Invoke-RestMethod -Uri $url -Body $body -Method Post -Headers @{
+              $pipeline = Invoke-RestMethod -Uri $url -Body @{
+               search = "search index=_internal | reverse | href | table index,host,source,sourcetype,_raw"
+              } -Method Post -Headers @{
                   Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
               }
               Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
