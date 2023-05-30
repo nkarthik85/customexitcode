@@ -15,7 +15,7 @@ jobs:
           #filePath: $(System.DefaultWorkingDirectory)\test2.ps1
           errorActionPreference: SilentlyContinue
           script: >
-           $result = ./test2.ps1'
+           $result = "./test2.ps1"
             Write-Host "TestResult: $result.isOld"
             Write-Host "##vso[task.setvariable variable=output;isOutput=true]$result"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
