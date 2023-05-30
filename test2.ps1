@@ -1,4 +1,4 @@
-param ($input1, $input2)
+#param ($input1, $input2)
 $isNew = $true
 $isOld = $false
 $outputs = @{
@@ -7,6 +7,6 @@ $outputs = @{
     IsOld = $isOld
 }
 Write-Output -InputObject $outputs
-Write-Host "$input1 $input2"
+#Write-Host "$input1 $input2"
 Write-Host "$isNew"
 Write-Host "$isOld"
