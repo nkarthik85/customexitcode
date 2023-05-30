@@ -17,7 +17,7 @@ jobs:
             Write-Host "##vso[task.setvariable variable=outputs;]false
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
-            echo $($result.outputs)
+            echo $(outputs)
             
        
       - task: PowerShell@2
