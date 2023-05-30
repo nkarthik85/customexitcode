@@ -10,12 +10,13 @@ jobs:
       - task: PowerShell@2
         name: Task_A
         inputs:
-          targetType: filePath
-          filePath: $(System.DefaultWorkingDirectory)\test2.ps1
+          #targetType: filePath
+          targetType: inline
+          #filePath: $(System.DefaultWorkingDirectory)\test2.ps1
           errorActionPreference: SilentlyContinue
           script: >
-           #$result = filePath: $(System.DefaultWorkingDirectory)\test2.ps1 
-            Write-Host "TestResult: $filePath"
+           $result = ./test2.ps1
+            Write-Host "TestResult: $result"
             Write-Host "##vso[task.setvariable variable=output;isOutput=true]$result"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
             #Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
