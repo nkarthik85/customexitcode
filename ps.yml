@@ -16,6 +16,7 @@ jobs:
            $result = $(Pipeline.Workspace)/test2.ps1
             Write-Host "results: $result"
             Write-Host "##vso[task.setvariable variable=outputs;]$($result.IsOld)" -verbose
+            Write-Host "results: $result.IsOld"
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             echo $(result.IsOld)
@@ -23,7 +24,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: eq(variables['Task_A.IsOld'], 'true') 
+        condition: eq(variables['Task_A.result.IsOld'], 'true') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
