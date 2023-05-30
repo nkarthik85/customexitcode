@@ -29,7 +29,7 @@ jobs:
         
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.$input1'], 'World') 
+        condition: ne(variables['Task_A.input1'], 'World') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
