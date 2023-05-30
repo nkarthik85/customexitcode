@@ -14,7 +14,7 @@ jobs:
           errorActionPreference: SilentlyContinue
           script: >
            #$result = $(Pipeline.Workspace)/test2.ps1
-            Write-Host "##vso[task.setvariable variable=output;isOutput=true]true"
+            Write-Host "##vso[task.setvariable variable=output;isOutput=true]false"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
             #Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             #echo $(outputs)
