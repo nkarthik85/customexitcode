@@ -22,7 +22,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.IsOld'], 'False') 
+        condition: eq(variables['Task_A.IsOld'], 'true') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
