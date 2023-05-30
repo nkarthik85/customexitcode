@@ -11,7 +11,7 @@ jobs:
         name: Task_A
         inputs:
           targetType: filePath
-          filePath: $(System.DefaultWorkingDirectory)\test.ps1
+          filePath: $(System.DefaultWorkingDirectory)\test2.ps1
           errorActionPreference: SilentlyContinue
           script: >
            #$result = filePath: $(System.DefaultWorkingDirectory)\test2.ps1 
