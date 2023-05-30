@@ -14,6 +14,7 @@ jobs:
           errorActionPreference: SilentlyContinue
           script: >
            $result = $(Pipeline.Workspace)/test2.ps1
+            Write-Host "results: $result"
             Write-Host "##vso[task.setvariable variable=outputs;]$outputs"
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
@@ -21,7 +22,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.exitCode'], '0') 
+        condition: ne(variables['Task_A.IsNew'], 'False') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
