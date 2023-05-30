@@ -11,10 +11,10 @@ jobs:
         name: Task_A
         inputs:
           targetType: inline
+          filePath: $(System.DefaultWorkingDirectory)\test.ps1
           errorActionPreference: SilentlyContinue
           script: >
-           #$result = filePath: $(System.DefaultWorkingDirectory)\test2.ps1
-           filePath: $(System.DefaultWorkingDirectory)\test.ps1
+           #$result = filePath: $(System.DefaultWorkingDirectory)\test2.ps1 
             Write-Host "TestResult: $filePath"
             Write-Host "##vso[task.setvariable variable=output;isOutput=true]$result"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
