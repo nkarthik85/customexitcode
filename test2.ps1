@@ -1,8 +1,9 @@
 param ($input1, $input2)
+$isNew = $true
 $outputs = @{
-    AliasName = $AliasName
-    IndexName = $result.Value.Name
-    IndexVersion = $result.Value.Version
+    AliasName = test
+    IndexName = result
+    IndexVersion = Value.Version
     IsNew = $isNew
 }
 Write-Output -InputObject $outputs
