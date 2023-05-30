@@ -45,8 +45,8 @@ jobs:
         inputs:
           targetType: filePath
           filePath: $(System.DefaultWorkingDirectory)\test2.ps1
-          arguments: |
-            -input1 "Hello" -input2 "World"
+          #arguments: |
+            #-input1 "Hello" -input2 "World"
 
       #- task: AzurePowerShell@5
         #name: Task_B
