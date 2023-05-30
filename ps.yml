@@ -24,7 +24,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: eq(variables['Task_A.outputs'], 'true') 
+        condition: ne(variables['Task_A.outputs'], 'false') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
