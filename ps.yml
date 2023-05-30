@@ -22,7 +22,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.IsNew'], 'False') 
+        condition: ne(variables['Task_A.isNew'], 'False') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
