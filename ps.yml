@@ -16,38 +16,44 @@ jobs:
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
    
-      #- task: PowerShell@2
-        #name: Task_B
-        #condition: eq(variables['Task_A.exitCode'], '1') 
-        #inputs:
-          #errorActionPreference: SilentlyContinue
-          #targetType: inline
-          #script: >
-            #$url = "https://hrms.techmango.net"
-              #Write-Host "URL: $url"
-              #$pipeline = Invoke-RestMethod -Uri $url -Method Post -Headers @{
-                  #Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-              #}
-              #Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
-        #env:
-          #SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-       
-      - task: AzurePowerShell@5
+      - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.exitCode'], '1')
+        condition: eq(variables['Task_A.exitCode'], '1') 
         inputs:
           errorActionPreference: SilentlyContinue
-          #azureSubscription: '$(service_connection)'
-          ScriptType: 'InlineScript'
-          Inline: | 
+          targetType: inline
+          script: >
             $url = "https://hrms.techmango.net"
-            $token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$(system.accesstoken)"))
-            $body = "Techmango Technology Services Pvt Ltd"
-            $response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Method Post -Body $body -ContentType application/json
-            echo $response
-          azurePowerShellVersion: 'LatestVersion'
+            $Body = @{
+               search = "search index=_internal | reverse | href | table index,host,source,sourcetype,_raw"
+               output_mode = "csv"
+               earliest_time = "-2d@d"
+               latest_time = "-1d@d"
+            }
+              Write-Host "URL: $url"
+              $pipeline = Invoke-RestMethod -Uri $url -Body $body -Method Post -Headers @{
+                  Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+              }
+              Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
         env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)  
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+       
+      #- task: AzurePowerShell@5
+        #name: Task_B
+        #condition: ne(variables['Task_A.exitCode'], '1')
+        #inputs:
+          #errorActionPreference: SilentlyContinue
+          #azureSubscription: '$(service_connection)'
+          #ScriptType: 'InlineScript'
+          #Inline: | 
+            #$url = "https://hrms.techmango.net"
+            #$token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$(system.accesstoken)"))
+            #$body = "Techmango Technology Services Pvt Ltd"
+            #$response = Invoke-RestMethod -Uri $url -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Method Post -Body $body -ContentType application/json
+            #echo $response
+          #azurePowerShellVersion: 'LatestVersion'
+        #env:
+          #SYSTEM_ACCESSTOKEN: $(System.AccessToken)  
                     
       - task: PowerShell@2
         inputs:
