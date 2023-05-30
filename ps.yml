@@ -14,7 +14,7 @@ jobs:
           errorActionPreference: SilentlyContinue
           script: >
            $result = $(Pipeline.Workspace)/test2.ps1
-            Write-Host "##vso[task.setvariable variable=output;]$outputs"
+            Write-Host "##vso[task.setvariable variable=output;]true"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
             #Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             #echo $(outputs)
@@ -24,7 +24,7 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: ne(variables['Task_A.outputs'], 'false') 
+        condition: eq(variables['Task_A.output'], 'false') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
@@ -44,7 +44,7 @@ jobs:
         displayName: Print Hello World 
         inputs:
           targetType: filePath
-          filePath: $(System.DefaultWorkingDirectory)\test2.ps1
+          filePath: $(System.DefaultWorkingDirectory)\test.ps1
           #arguments: |
             #-input1 "Hello" -input2 "World"
 
