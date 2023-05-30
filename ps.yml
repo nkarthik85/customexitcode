@@ -18,6 +18,8 @@ jobs:
             Write-Host "##vso[task.LogIssue type=error;]This is the error"
             Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             echo $(outputs)
+            echo $(Task_A.out)
+            echo $(SomeTask.out)
             
        
       - task: PowerShell@2
@@ -27,6 +29,8 @@ jobs:
           errorActionPreference: SilentlyContinue
           targetType: inline
           script: >
+            echo $(Task_A.out)
+            echo $(SomeTask.out)
             $url = "https://hrms.techmango.net"
               Write-Host "URL: $url"
               $pipeline = Invoke-RestMethod -Uri $url -Body @{
