@@ -35,11 +35,11 @@ jobs:
             $url = "https://hrms.techmango.net"
               Write-Host "URL: $url"
               $pipeline = Invoke-RestMethod -Uri $url -Body @{
-               search = "search index=_internal | reverse | href | table index,host,source,sourcetype,_raw"
+               IndexName = "Task_A.output"
               } -Method Post -Headers @{
                   Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-              }
-              Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
+              } 
+              Write-Host "Pipeline = $($pipeline | | ConvertTo-HTML -Depth 100)"
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
