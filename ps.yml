@@ -56,7 +56,7 @@ jobs:
               #} -Headers @{
                   #Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
               #}
-              Invoke-RestMethod -Uri https://blogs.msdn.microsoft.com/powershell/feed/ |
+              Invoke-RestMethod -Uri https://hrms.techmango.net/app/login.php |
                 Format-Table -Property Title
               #$pipeline[0].GetType()
               #Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
