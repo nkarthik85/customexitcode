@@ -17,7 +17,7 @@ jobs:
           script: >
            $result = $(Pipeline.Workspace)/test2.ps1
             #Write-Host "TestResult: $(Pipeline.Workspace)/test2.ps1"
-            Write-Host "##vso[task.setvariable variable=output;isOutput=true]$($result.isNew)" -Verbose
+            Write-Host "##vso[task.setvariable variable=output;isOutput=true]dev-companies"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
             #Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             #echo $(outputs)
@@ -27,12 +27,13 @@ jobs:
        
       - task: PowerShell@2
         name: Task_B
-        condition: eq(variables['Task_A.output'], 'true') 
+        condition: eq(variables['Task_A.output'], 'false') 
         inputs:
           errorActionPreference: SilentlyContinue
           targetType: inline
           script: >
             $url = "https://hrms.techmango.net"
+              echo $(Task_A.output)
               Write-Host "URL: $url"
               $pipeline = Invoke-RestMethod -Uri $url -Body @{
                IndexName = "Task_A.output"
