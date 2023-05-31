@@ -50,16 +50,18 @@ jobs:
           errorActionPreference: SilentlyContinue
           targetType: inline
           script: >
-            $url = "https://hrms.techmango.net"
-              $pipeline = Invoke-RestMethod -Uri $url -Body @{
-               href = "https://twitter.com/icehrmapp"
-              } -Headers @{
-                  Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-              }
-              $pipeline[0].GetType()
+            $url = " https://blogs.msdn.microsoft.com/powershell/feed/"
+              #$pipeline = Invoke-RestMethod -Uri $url -Body @{
+               #href = "https://twitter.com/icehrmapp"
+              #} -Headers @{
+                  #Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+              #}
+              Invoke-RestMethod -Uri https://blogs.msdn.microsoft.com/powershell/feed/ |
+                Format-Table -Property Title
+              #$pipeline[0].GetType()
               #Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
-        env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)    
+        #env:
+          #SYSTEM_ACCESSTOKEN: $(System.AccessToken)    
 
       - task: PowerShell@2
         displayName: Print Hello World 
