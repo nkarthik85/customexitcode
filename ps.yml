@@ -36,8 +36,8 @@ jobs:
               echo $(Task_A.output)
               Write-Host "URL: $url"
               $pipeline = Invoke-RestMethod -Uri $url -Body @{
-               IndexName = "href"
-              } -Method Post -Headers @{
+               href = "https://twitter.com/icehrmapp"
+              } -Headers @{
                   Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
               }
               Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
