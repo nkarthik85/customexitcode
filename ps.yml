@@ -77,13 +77,10 @@ jobs:
           filePath: $(System.DefaultWorkingDirectory)\test.ps1
           #arguments: |
             #-input1 "Hello" -input2 "World"
-       
-- stage: Stage2
-  displayName: Stage 2
-  condition: always()
-  jobs:
+
   - job: Publish
-    pool: server
+    pool: 
+      vmImage: 'ubuntu-latest'
     steps:
       - task: PublishToAzureServiceBus@1
         inputs:
