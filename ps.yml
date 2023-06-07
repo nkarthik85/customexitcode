@@ -5,6 +5,9 @@ parameters:
     
 trigger:
   - master
+stages:
+- stage: Stage1
+  displayName: Stage 1  
 jobs:
   - job: PShellTest
     pool:
@@ -67,6 +70,13 @@ jobs:
         #env:
           #SYSTEM_ACCESSTOKEN: $(System.AccessToken)    
 
+- stage: Stage2
+  displayName: Stage 2
+  condition: always()
+  jobs:
+  - job: Publish
+    pool: server
+    steps:
       - task: PowerShell@2
         displayName: Print Hello World 
         inputs:
