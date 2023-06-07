@@ -1,4 +1,8 @@
 ---
+parameters:
+  - name: azureServiceConnection
+    type: string
+    
 trigger:
   - master
 jobs:
@@ -71,18 +75,18 @@ jobs:
           #arguments: |
             #-input1 "Hello" -input2 "World"
        
-    jobs:
-    - job: Publish
-      pool: server
-      variables:
-        jobStatus: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.jobStatus'] ]
-        projectFile: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.projectFile'] ]
-      steps:
-        - task: PublishToAzureServiceBus@1
-          inputs:
-            azureSubscription: 'SBConnection'
-            messageBody: '{"Test Azure Service Bus"}'
-            waitForCompletion: false
+    #jobs:
+    #- job: Publish
+      #pool: server
+      #variables:
+        #jobStatus: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.jobStatus'] ]
+        #projectFile: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.projectFile'] ]
+      #steps:
+      - task: PublishToAzureServiceBus@1
+        inputs:
+          azureSubscription: 'SBConnection'
+          messageBody: '{"Test Azure Service Bus"}'
+          waitForCompletion: false
 
       #- task: AzurePowerShell@5
         #name: Task_B
