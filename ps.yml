@@ -1,30 +1,23 @@
 ---
-parameters:
-  - name: azureServiceConnection
-    type: string
-    
 trigger:
   - master
-stages:
-- stage: Stage1
-  displayName: Stage 1  
-  jobs:
-    - job: PShellTest
-      pool:
-        vmImage: windows-latest
-      displayName: Run PSTest
-      steps:
-        - task: PowerShell@2
-          name: Task_A
-          inputs:
+jobs:
+  - job: PShellTest
+    pool:
+      vmImage: windows-latest
+    displayName: Run PSTest
+    steps:
+      - task: PowerShell@2
+        name: Task_A
+        inputs:
           #targetType: filePath
-            targetType: inline
+          targetType: inline
           #filePath: $(System.DefaultWorkingDirectory)\test2.ps1
-            errorActionPreference: SilentlyContinue
-            script: >
-             $result = $(Pipeline.Workspace)/test2.ps1
+          errorActionPreference: SilentlyContinue
+          script: >
+           $result = $(Pipeline.Workspace)/test2.ps1
             #Write-Host "TestResult: $(Pipeline.Workspace)/test2.ps1"
-             Write-Host "##vso[task.setvariable variable=output;isOutput=true]dev-companies"
+            Write-Host "##vso[task.setvariable variable=output;isOutput=true]dev-companies"
             #Write-Host "##vso[task.LogIssue type=error;]This is the error"
             #Write-Output ("[Error] Failing task since return code was {0} while expected 0." -f $exitCode)
             #echo $(outputs)
@@ -32,61 +25,51 @@ stages:
             #echo $(SomeTask.out)
             
        
-        - task: PowerShell@2
-          name: Task_B
-          condition: ne(variables['Task_A.output'], 'false') 
-          inputs:
-            errorActionPreference: SilentlyContinue
-            targetType: inline
-            script: >
-              $url = "https://hrms.techmango.net"
-                echo $(Task_A.output)
-                Write-Host "URL: $url"
-                $pipeline = Invoke-RestMethod -Uri $url -Body @{
-                 href = "https://twitter.com/icehrmapp"
-                } -Headers @{
-                    Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-                }
-                Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
-          env:
-            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      - task: PowerShell@2
+        name: Task_B
+        condition: ne(variables['Task_A.output'], 'false') 
+        inputs:
+          errorActionPreference: SilentlyContinue
+          targetType: inline
+          script: >
+            $url = "https://hrms.techmango.net"
+              echo $(Task_A.output)
+              Write-Host "URL: $url"
+              $pipeline = Invoke-RestMethod -Uri $url -Body @{
+               href = "https://twitter.com/icehrmapp"
+              } -Headers @{
+                  Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+              }
+              Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           
-        - task: PowerShell@2
-          displayName: Method
-          inputs:
-            errorActionPreference: SilentlyContinue
-            targetType: inline
-            script: >
-              $url = " https://blogs.msdn.microsoft.com/powershell/feed/"
+      - task: PowerShell@2
+        displayName: Method
+        inputs:
+          errorActionPreference: SilentlyContinue
+          targetType: inline
+          script: >
+            $url = " https://blogs.msdn.microsoft.com/powershell/feed/"
               #$pipeline = Invoke-RestMethod -Uri $url -Body @{
                #href = "https://twitter.com/icehrmapp"
               #} -Headers @{
                   #Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
               #}
-                Invoke-RestMethod -Uri https://hiregroundplatform-dev.servicebus.windows.net |
-                  Format-Table -Property Title
+              Invoke-RestMethod -Uri https://hiregroundplatform-dev.servicebus.windows.net |
+                Format-Table -Property Title
               #$pipeline[0].GetType()
               #Write-Host "Pipeline = $($pipeline | ConvertTo-Json -Depth 100)"
         #env:
           #SYSTEM_ACCESSTOKEN: $(System.AccessToken)    
 
-        - task: PowerShell@2
-          displayName: Print Hello World 
-          inputs:
-            targetType: filePath
-            filePath: $(System.DefaultWorkingDirectory)\test.ps1
+      - task: PowerShell@2
+        displayName: Print Hello World 
+        inputs:
+          targetType: filePath
+          filePath: $(System.DefaultWorkingDirectory)\test.ps1
           #arguments: |
             #-input1 "Hello" -input2 "World"
-
-    - job: Publish
-      pool: 
-        vmImage: 'ubuntu-latest'
-      steps:
-        - task: PublishToAzureServiceBus@1
-          inputs:
-            azureSubscription: 'SBConnection'
-            messageBody: '{"Test Azure Service Bus"}'
-            waitForCompletion: false
 
       #- task: AzurePowerShell@5
         #name: Task_B
