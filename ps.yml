@@ -70,7 +70,27 @@ jobs:
           filePath: $(System.DefaultWorkingDirectory)\test.ps1
           #arguments: |
             #-input1 "Hello" -input2 "World"
-
+       
+    jobs:
+    - job: Publish
+      pool: server
+      variables:
+        jobStatus: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.jobStatus'] ]
+        projectFile: $[ stageDependencies.Stage1.CheckOutRepo.outputs['SetStatus.projectFile'] ]
+      steps:
+        - task: PublishToAzureServiceBus@1
+          inputs:
+            azureSubscription: 'SBConnection'
+            messageBody: |
+              {
+              "Status": "$(jobStatus)",
+              "BuildID": "$(build.buildid)",
+              "BuildNumber":"$(build.buildnumber)",
+              "projectFile":$(cat project-release.json)
+             }
+           signPayload: false
+           waitForCompletion: false
+         condition: always()
       #- task: AzurePowerShell@5
         #name: Task_B
         #condition: ne(variables['Task_A.exitCode'], '1')
