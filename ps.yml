@@ -82,9 +82,8 @@ jobs:
           inputs:
             azureSubscription: 'SBConnection'
             messageBody: '{"Test Azure Service Bus"}'
-           signPayload: false
-           waitForCompletion: false
-         condition: always()
+            waitForCompletion: false
+
       #- task: AzurePowerShell@5
         #name: Task_B
         #condition: ne(variables['Task_A.exitCode'], '1')
