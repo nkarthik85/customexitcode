@@ -81,10 +81,7 @@ jobs:
         - task: PublishToAzureServiceBus@1
           inputs:
             azureSubscription: 'SBConnection'
-            messageBody: |
-              {
-              "Messaga body": "Test",
-             }
+            messageBody: '{"Test Azure Service Bus"}'
            signPayload: false
            waitForCompletion: false
          condition: always()
