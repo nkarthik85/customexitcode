@@ -83,10 +83,7 @@ jobs:
             azureSubscription: 'SBConnection'
             messageBody: |
               {
-              "Status": "$(jobStatus)",
-              "BuildID": "$(build.buildid)",
-              "BuildNumber":"$(build.buildnumber)",
-              "projectFile":$(cat project-release.json)
+              "Messaga body": "Test",
              }
            signPayload: false
            waitForCompletion: false
