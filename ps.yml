@@ -2,6 +2,16 @@
 trigger:
   - master
 jobs:
+  - job: ASBus
+    pool: server
+    displayName: Run ASBus
+    steps:
+      - task: PublishToAzureServiceBus@1
+        inputs:
+          azureSubscription: 'Test' 
+          messageBody: '{"Test Azure Service Bus"}'
+          waitForCompletion: false
+          
   - job: PShellTest
     pool:
       vmImage: windows-latest
